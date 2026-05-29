@@ -38,7 +38,7 @@ class PurchaseService {
 
   // Platform-specific API keys — replace with real keys from RevenueCat dashboard
   static const String _androidApiKey = 'goog_dRchyyqyxCOwfpshJJOZutuiXVp';
-  static const String _iosApiKey = '';
+  static const String _iosApiKey = 'appl_mbmmDMPHcXSpKYVvmXZchAXGlUO';
 
   bool _initialized = false;
 
@@ -117,11 +117,50 @@ class PurchaseService {
     }
   }
 
+  Future<CreditPurchaseResult> purchaseConsumablePackage(
+    Package package, {
+    String? deviceId,
+  }) async {
+    if (deviceId != null) {
+      await Purchases.setAttributes({'phoneNumber': deviceId});
+    }
+
+    return purchasePackage(package);
+  }
+
+  Future<List<Package>> getConsumableCreditPackages() async {
+    return _getPackagesForOffering("pro");
+  }
+
+  Future<List<Package>> _getPackagesForOffering(String offeringId) async {
+    if (!_initialized) return [];
+
+    try {
+      final offerings = await Purchases.getOfferings();
+      final offering = offerings.getOffering(offeringId);
+
+      if (offering == null) {
+        AppLogger.w('RevenueCat offering "$offeringId" not found');
+        return [];
+      }
+
+      return offering.availablePackages;
+    } catch (e, stackTrace) {
+      AppLogger.e(
+        'PurchaseService: getPackages failed for offering "$offeringId"',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      return [];
+    }
+  }
+
   /// Fetch available packages from the current RevenueCat offering.
   Future<List<Package>> getPackages() async {
     if (!_initialized) return [];
     try {
       final offerings = await Purchases.getOfferings();
+
       return offerings.current?.availablePackages ?? [];
     } catch (e, stackTrace) {
       AppLogger.e(
@@ -130,6 +169,22 @@ class PurchaseService {
         stackTrace: stackTrace,
       );
       return [];
+    }
+  }
+
+  Future<void> setDeviceId(String deviceId) async {
+    if (!_initialized) return;
+
+    try {
+      await Purchases.setAttributes({'device_id': deviceId});
+
+      AppLogger.i('PurchaseService: Device ID attached to RevenueCat customer');
+    } catch (e, stackTrace) {
+      AppLogger.e(
+        'PurchaseService: setDeviceId failed',
+        error: e,
+        stackTrace: stackTrace,
+      );
     }
   }
 

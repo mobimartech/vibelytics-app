@@ -78,11 +78,7 @@ class InsufficientCreditsScreen extends StatelessWidget {
                     color: VColors.warning.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    VIcons.credits,
-                    size: 32,
-                    color: VColors.warning,
-                  ),
+                  child: Icon(VIcons.credits, size: 32, color: VColors.warning),
                 ),
 
                 VSpace.v4,
@@ -113,7 +109,11 @@ class InsufficientCreditsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+                    color: VColors.adaptive(
+                      context,
+                      light: VColors.bgSecondary,
+                      dark: VColors.bgSecondaryDark,
+                    ),
                     borderRadius: VRadii.lgRadius,
                   ),
                   child: Row(
@@ -159,7 +159,7 @@ class InsufficientCreditsScreen extends StatelessWidget {
                     nav.pop();
                     nav.push(
                       MaterialPageRoute(
-                        builder: (_) => const BuyCreditsScreen(),
+                        builder: (_) => const BuyCreditPacksScreen(),
                       ),
                     );
                   },
@@ -211,10 +211,7 @@ class _BalanceItem extends StatelessWidget {
       children: [
         Text(
           value.toString(),
-          style: VType.h3.copyWith(
-            color: color,
-            fontFamily: 'JetBrains Mono',
-          ),
+          style: VType.h3.copyWith(color: color, fontFamily: 'JetBrains Mono'),
         ),
         VSpace.v05,
         Text(

@@ -36,10 +36,8 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
     if (_selectedImages.length >= _maxImages) return;
 
     try {
-      final permissionInfo =
-          await PermissionCoordinator.instance.ensurePhotoLibraryAccess(
-        context,
-      );
+      final permissionInfo = await PermissionCoordinator.instance
+          .ensurePhotoLibraryAccess(context);
       if (!mounted) return;
       if (!permissionInfo.isAllowed) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -80,21 +78,21 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
         context: context,
         requiredCredits: cost,
         currentCredits: balance,
-        onBuyCredits: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const BuyCreditsScreen()),
-        ),
+        onBuyCredits: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const BuyCreditPacksScreen())),
       );
       return;
     }
 
     _isNavigating = true;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => AnalysisProcessingScreen(
-          images: _selectedImages,
-        ),
-      ),
-    ).then((_) => _isNavigating = false);
+    Navigator.of(context)
+        .push(
+          MaterialPageRoute(
+            builder: (_) => AnalysisProcessingScreen(images: _selectedImages),
+          ),
+        )
+        .then((_) => _isNavigating = false);
   }
 
   @override
@@ -126,8 +124,9 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                     // Description
                     Text(
                       'enhance.upload_description'.tr(),
-                      style:
-                          VType.screenBody.copyWith(color: VColors.textSec(context)),
+                      style: VType.screenBody.copyWith(
+                        color: VColors.textSec(context),
+                      ),
                     ),
 
                     VSpace.v6,
@@ -139,11 +138,11 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                          childAspectRatio: 0.75,
-                        ),
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 0.75,
+                            ),
                         itemCount: _selectedImages.length,
                         itemBuilder: (context, index) {
                           return _ImageTile(
@@ -170,8 +169,9 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                       'enhance.photos_selected'.tr(
                         args: ['${_selectedImages.length}', '$_maxImages'],
                       ),
-                      style:
-                          VType.screenMeta.copyWith(color: VColors.textTer(context)),
+                      style: VType.screenMeta.copyWith(
+                        color: VColors.textTer(context),
+                      ),
                     ),
 
                     VSpace.v6,
@@ -180,7 +180,11 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                     Container(
                       padding: VSpace.card,
                       decoration: BoxDecoration(
-                        color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+                        color: VColors.adaptive(
+                          context,
+                          light: VColors.bgSecondary,
+                          dark: VColors.bgSecondaryDark,
+                        ),
                         borderRadius: VRadii.lgRadius,
                       ),
                       child: Column(
@@ -268,7 +272,9 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                   VSpace.v3,
                   PrimaryButton(
                     label: 'enhance.analyze_button'.tr(),
-                    onPressed: _selectedImages.isNotEmpty ? _startAnalysis : null,
+                    onPressed: _selectedImages.isNotEmpty
+                        ? _startAnalysis
+                        : null,
                     isEnabled: _selectedImages.isNotEmpty,
                   ),
                 ],
@@ -282,10 +288,7 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
 }
 
 class _AddPhotoButton extends StatelessWidget {
-  const _AddPhotoButton({
-    required this.onTap,
-    required this.isEmpty,
-  });
+  const _AddPhotoButton({required this.onTap, required this.isEmpty});
 
   final VoidCallback onTap;
   final bool isEmpty;
@@ -297,12 +300,13 @@ class _AddPhotoButton extends StatelessWidget {
       child: Container(
         height: isEmpty ? 200 : 100,
         decoration: BoxDecoration(
-          color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
-          borderRadius: VRadii.lgRadius,
-          border: Border.all(
-            color: VColors.border(context),
-            width: 2,
+          color: VColors.adaptive(
+            context,
+            light: VColors.bgSecondary,
+            dark: VColors.bgSecondaryDark,
           ),
+          borderRadius: VRadii.lgRadius,
+          border: Border.all(color: VColors.border(context), width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -314,9 +318,7 @@ class _AddPhotoButton extends StatelessWidget {
             ),
             VSpace.v2,
             Text(
-              isEmpty
-                  ? 'enhance.add_photos'.tr()
-                  : 'enhance.add_more'.tr(),
+              isEmpty ? 'enhance.add_photos'.tr() : 'enhance.add_more'.tr(),
               style: VType.body.copyWith(color: VColors.textTer(context)),
             ),
             if (isEmpty) ...[
@@ -355,7 +357,11 @@ class _ImageTile extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) return snapshot.data!;
               return Container(
-                color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+                color: VColors.adaptive(
+                  context,
+                  light: VColors.bgSecondary,
+                  dark: VColors.bgSecondaryDark,
+                ),
                 child: Center(
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
@@ -401,11 +407,7 @@ class _ImageTile extends StatelessWidget {
                 color: Colors.black.withValues(alpha: 0.6),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                VIcons.close,
-                size: 16,
-                color: Colors.white,
-              ),
+              child: Icon(VIcons.close, size: 16, color: Colors.white),
             ),
           ),
         ),

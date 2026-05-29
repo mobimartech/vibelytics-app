@@ -14,18 +14,12 @@ import '../credits/buy_credits_screen.dart';
 
 /// Gatekeeper unlock bottom sheet (viral mechanic)
 class GatekeeperSheet extends StatelessWidget {
-  const GatekeeperSheet({
-    super.key,
-    this.previewText,
-  });
+  const GatekeeperSheet({super.key, this.previewText});
 
   final String? previewText;
 
   /// Show the gatekeeper sheet as a modal
-  static Future<bool?> show(
-    BuildContext context, {
-    String? previewText,
-  }) {
+  static Future<bool?> show(BuildContext context, {String? previewText}) {
     return showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -37,22 +31,14 @@ class GatekeeperSheet extends StatelessWidget {
   void _inviteFriend(BuildContext context) {
     VHaptics.light();
     Navigator.of(context).pop();
-    SharePlus.instance.share(
-      ShareParams(
-        text: 'activity.invite_text'.tr(),
-      ),
-    );
+    SharePlus.instance.share(ShareParams(text: 'activity.invite_text'.tr()));
   }
 
   void _buyCredits(BuildContext context) {
     VHaptics.light();
     final nav = Navigator.of(context);
     nav.pop();
-    nav.push(
-      MaterialPageRoute(
-        builder: (_) => const BuyCreditsScreen(),
-      ),
-    );
+    nav.push(MaterialPageRoute(builder: (_) => const BuyCreditPacksScreen()));
   }
 
   @override
@@ -63,9 +49,7 @@ class GatekeeperSheet extends StatelessWidget {
       margin: const EdgeInsets.only(top: 100),
       decoration: BoxDecoration(
         color: VColors.card(context),
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -88,7 +72,11 @@ class GatekeeperSheet extends StatelessWidget {
             height: 120,
             margin: const EdgeInsets.symmetric(horizontal: 24),
             decoration: BoxDecoration(
-              color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+              color: VColors.adaptive(
+                context,
+                light: VColors.bgSecondary,
+                dark: VColors.bgSecondaryDark,
+              ),
               borderRadius: VRadii.lgRadius,
             ),
             child: Stack(
@@ -125,12 +113,16 @@ class GatekeeperSheet extends StatelessWidget {
                             VSpace.v3,
                             Text(
                               preview,
-                              style: VType.body.copyWith(color: VColors.textSec(context)),
+                              style: VType.body.copyWith(
+                                color: VColors.textSec(context),
+                              ),
                             ),
                             VSpace.v1,
                             Text(
                               'activity.secret_ratings'.tr(),
-                              style: VType.bodySm.copyWith(color: VColors.textTer(context)),
+                              style: VType.bodySm.copyWith(
+                                color: VColors.textTer(context),
+                              ),
                             ),
                           ],
                         ),
@@ -144,7 +136,11 @@ class GatekeeperSheet extends StatelessWidget {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark).withValues(alpha: 0.9),
+                      color: VColors.adaptive(
+                        context,
+                        light: VColors.bgSecondary,
+                        dark: VColors.bgSecondaryDark,
+                      ).withValues(alpha: 0.9),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

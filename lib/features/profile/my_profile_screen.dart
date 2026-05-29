@@ -50,8 +50,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   String _formatMemberSince(DateTime date) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[date.month - 1]} ${date.year}';
   }
@@ -113,7 +123,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   height: 88,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+                    color: VColors.adaptive(
+                      context,
+                      light: VColors.bgSecondary,
+                      dark: VColors.bgSecondaryDark,
+                    ),
                     border: Border.all(
                       color: VColors.accentPrimary.withValues(alpha: 0.3),
                       width: 3,
@@ -154,7 +168,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         height: 20,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: VColors.adaptive(context, light: VColors.bgSecondary, dark: VColors.bgSecondaryDark),
+                            color: VColors.adaptive(
+                              context,
+                              light: VColors.bgSecondary,
+                              dark: VColors.bgSecondaryDark,
+                            ),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -176,7 +194,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           : '...',
                     ],
                   ),
-                  style: VType.caption.copyWith(color: VColors.textSec(context)),
+                  style: VType.caption.copyWith(
+                    color: VColors.textSec(context),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -224,7 +244,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const BuyCreditsScreen(),
+                          builder: (_) => const BuyCreditPacksScreen(),
                         ),
                       );
                     },
@@ -236,24 +256,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       ),
                       child: Row(
                         children: [
-                          Icon(
-                            VIcons.wallet,
-                            color: VColors.accentSecondary,
-                          ),
+                          Icon(VIcons.wallet, color: VColors.accentSecondary),
                           VSpace.h3,
                           ValueListenableBuilder<int>(
                             valueListenable: MainShell.creditNotifier,
                             builder: (_, credits, _) => Text(
                               'credits.balance'.tr(args: ['$credits']),
-                              style: VType.label
-                                  .copyWith(color: creditTierColor(credits)),
+                              style: VType.label.copyWith(
+                                color: creditTierColor(credits),
+                              ),
                             ),
                           ),
                           const Spacer(),
                           Text(
                             'credits.buy_more'.tr(),
-                            style:
-                                VType.label.copyWith(color: VColors.textLink),
+                            style: VType.label.copyWith(
+                              color: VColors.textLink,
+                            ),
                           ),
                           Icon(
                             VIcons.chevronRight,
@@ -315,8 +334,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) =>
-                                  const ReferralDashboardScreen(),
+                              builder: (_) => const ReferralDashboardScreen(),
                             ),
                           );
                         },
@@ -346,10 +364,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 }
 
 class _StatColumn extends StatelessWidget {
-  const _StatColumn({
-    required this.value,
-    required this.label,
-  });
+  const _StatColumn({required this.value, required this.label});
 
   final String value;
   final String label;
@@ -402,10 +417,7 @@ class _ActionRow extends StatelessWidget {
               style: VType.screenBody.copyWith(color: VColors.text(context)),
             ),
             const Spacer(),
-            Icon(
-              VIcons.chevronRight,
-              color: VColors.textTer(context),
-            ),
+            Icon(VIcons.chevronRight, color: VColors.textTer(context)),
           ],
         ),
       ),

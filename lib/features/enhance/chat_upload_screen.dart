@@ -94,7 +94,7 @@ class _ChatUploadScreenState extends State<ChatUploadScreen> {
         requiredCredits: cost,
         currentCredits: balance,
         onBuyCredits: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const BuyCreditsScreen()),
+          MaterialPageRoute(builder: (_) => const BuyCreditPacksScreen()),
         ),
       );
       return;
