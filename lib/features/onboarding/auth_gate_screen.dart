@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vibelytics/main_shell.dart';
 import '../../core/tokens/colors.dart';
 import '../../core/tokens/typography.dart';
 import '../../core/tokens/spacing.dart';
@@ -136,9 +137,12 @@ class _AuthGateScreenState extends State<AuthGateScreen> {
   }
 
   void _navigateToReferral() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const ReferralEntryScreen()),
-    );
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const MainShell()));
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(builder: (_) => const ReferralEntryScreen()),
+    // );
   }
 
   void _showError(String errorKey) {
@@ -210,21 +214,21 @@ class _AuthGateScreenState extends State<AuthGateScreen> {
                 ),
               VSpace.v4,
 
-              // Coupon entry toggle
-              TextButton.icon(
-                onPressed: () {
-                  setState(() => _showCouponField = !_showCouponField);
-                },
-                icon: Icon(
-                  Icons.card_giftcard,
-                  size: 18,
-                  color: VColors.accentPrimary,
-                ),
-                label: Text(
-                  'auth.have_coupon'.tr(),
-                  style: VType.bodySm.copyWith(color: VColors.accentPrimary),
-                ),
-              ),
+              // // Coupon entry toggle
+              // TextButton.icon(
+              //   onPressed: () {
+              //     setState(() => _showCouponField = !_showCouponField);
+              //   },
+              //   icon: Icon(
+              //     Icons.card_giftcard,
+              //     size: 18,
+              //     color: VColors.accentPrimary,
+              //   ),
+              //   label: Text(
+              //     'auth.have_coupon'.tr(),
+              //     style: VType.bodySm.copyWith(color: VColors.accentPrimary),
+              //   ),
+              // ),
 
               // Expandable coupon field
               AnimatedSize(

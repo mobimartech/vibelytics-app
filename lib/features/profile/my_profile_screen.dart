@@ -222,15 +222,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         value: '${_profile?.totalEnhancedPhotos ?? 0}',
                         label: 'profile.enhanced'.tr(),
                       ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: VColors.border(context),
-                      ),
-                      _StatColumn(
-                        value: '${_profile?.totalPostedPhotos ?? 0}',
-                        label: 'profile.posted'.tr(),
-                      ),
+                      // Container(
+                      //   width: 1,
+                      //   height: 40,
+                      //   color: VColors.border(context),
+                      // ),
+                      // _StatColumn(
+                      //   value: '${_profile?.totalPostedPhotos ?? 0}',
+                      //   label: 'profile.posted'.tr(),
+                      // ),
                     ],
                   ),
                 ),
@@ -328,18 +328,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         },
                       ),
                       Divider(height: 1, color: VColors.border(context)),
-                      _ActionRow(
-                        icon: VIcons.gift,
-                        label: 'profile.referral_dashboard'.tr(),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const ReferralDashboardScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      Divider(height: 1, color: VColors.border(context)),
+                      // _ActionRow(
+                      //   icon: VIcons.gift,
+                      //   label: 'profile.referral_dashboard'.tr(),
+                      //   onTap: () {
+                      //     Navigator.of(context).push(
+                      //       MaterialPageRoute(
+                      //         builder: (_) => const ReferralDashboardScreen(),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      // Divider(height: 1, color: VColors.border(context)),
                       _ActionRow(
                         icon: VIcons.receipt,
                         label: 'profile.credit_history'.tr(),

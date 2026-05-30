@@ -73,8 +73,8 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
   StreamSubscription<void>? _sessionExpiredSub;
 
   final List<Widget> _screens = const [
-    HomeScreen(),
-    ExploreScreen(),
+    // HomeScreen(),
+    // ExploreScreen(),
     EnhanceHubScreen(),
     ActivityScreen(),
     MyProfileScreen(),

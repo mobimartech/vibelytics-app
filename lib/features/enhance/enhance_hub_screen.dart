@@ -131,18 +131,26 @@ class EnhanceHubScreen extends StatelessWidget {
                           color: VColors.accentSecondary.withValues(alpha: 0.1),
                           borderRadius: VRadii.mdRadius,
                         ),
-                        child: Icon(VIcons.gallery, color: VColors.accentSecondary),
+                        child: Icon(
+                          VIcons.gallery,
+                          color: VColors.accentSecondary,
+                        ),
                       ),
                       VSpace.h3,
                       Expanded(
                         child: Text(
                           'profile.enhanced_library'.tr(),
-                          style: VType.label.copyWith(color: VColors.text(context)),
+                          style: VType.label.copyWith(
+                            color: VColors.text(context),
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Icon(VIcons.chevronRight, color: VColors.textTer(context)),
+                      Icon(
+                        VIcons.chevronRight,
+                        color: VColors.textTer(context),
+                      ),
                     ],
                   ),
                 ),
@@ -151,36 +159,36 @@ class EnhanceHubScreen extends StatelessWidget {
               SizedBox(height: VSpace.screenSectionGap),
 
               // Earn free credits card
-              Container(
-                padding: VSpace.card,
-                decoration: BoxDecoration(
-                  color: VColors.accentSecondary.withValues(alpha: 0.08),
-                  borderRadius: VRadii.lgRadius,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'enhance.earn_free'.tr(),
-                      style: VType.screenSectionTitle.copyWith(
-                        color: VColors.text(context),
-                      ),
-                    ),
-                    VSpace.v3,
-                    _EarnRow(
-                      icon: VIcons.star,
-                      label: 'enhance.earn_rate'.tr(),
-                      bonus: 'enhance.earn_bonus'.tr(),
-                    ),
-                    VSpace.v2,
-                    _EarnRow(
-                      icon: VIcons.gift,
-                      label: 'enhance.earn_invite'.tr(),
-                      bonus: 'enhance.earn_bonus'.tr(),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding: VSpace.card,
+              //   decoration: BoxDecoration(
+              //     color: VColors.accentSecondary.withValues(alpha: 0.08),
+              //     borderRadius: VRadii.lgRadius,
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         'enhance.earn_free'.tr(),
+              //         style: VType.screenSectionTitle.copyWith(
+              //           color: VColors.text(context),
+              //         ),
+              //       ),
+              //       VSpace.v3,
+              //       _EarnRow(
+              //         icon: VIcons.star,
+              //         label: 'enhance.earn_rate'.tr(),
+              //         bonus: 'enhance.earn_bonus'.tr(),
+              //       ),
+              //       VSpace.v2,
+              //       _EarnRow(
+              //         icon: VIcons.gift,
+              //         label: 'enhance.earn_invite'.tr(),
+              //         bonus: 'enhance.earn_bonus'.tr(),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -219,59 +227,56 @@ class _ActionCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-              // Icon
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: iconBgColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(icon, color: VColors.accentPrimary),
+            // Icon
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: iconBgColor,
+                shape: BoxShape.circle,
               ),
-              VSpace.h4,
+              child: Icon(icon, color: VColors.accentPrimary),
+            ),
+            VSpace.h4,
 
-              // Content
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            // Content
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: VType.screenSectionTitle.copyWith(
+                      color: VColors.text(context),
+                    ),
+                  ),
+                  VSpace.v05,
+                  Text(
+                    description,
+                    style: VType.screenSupporting.copyWith(
+                      color: VColors.textSec(context),
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (cost != null) ...[
+                    VSpace.v1,
                     Text(
-                      title,
-                      style: VType.screenSectionTitle.copyWith(
-                        color: VColors.text(context),
+                      cost!,
+                      style: VType.labelSm.copyWith(
+                        color: VColors.accentPrimary,
                       ),
                     ),
-                    VSpace.v05,
-                    Text(
-                      description,
-                      style: VType.screenSupporting.copyWith(
-                        color: VColors.textSec(context),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (cost != null) ...[
-                      VSpace.v1,
-                      Text(
-                        cost!,
-                        style: VType.labelSm.copyWith(
-                          color: VColors.accentPrimary,
-                        ),
-                      ),
-                    ],
                   ],
-                ),
+                ],
               ),
+            ),
 
-              // Chevron
-              Icon(
-                VIcons.chevronRight,
-                color: VColors.textTer(context),
-              ),
-            ],
-          ),
+            // Chevron
+            Icon(VIcons.chevronRight, color: VColors.textTer(context)),
+          ],
         ),
+      ),
     );
   }
 }

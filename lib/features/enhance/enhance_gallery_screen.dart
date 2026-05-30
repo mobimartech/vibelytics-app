@@ -71,7 +71,8 @@ class _EnhanceGalleryScreenState extends State<EnhanceGalleryScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.loadFromApi && (widget.photos == null || widget.photos!.isEmpty)) {
+    if (widget.loadFromApi &&
+        (widget.photos == null || widget.photos!.isEmpty)) {
       _loadFromApi();
     } else if ((widget.photos ?? const []).isNotEmpty) {
       _selectedIndex = widget.initialIndex.clamp(0, widget.photos!.length - 1);
@@ -141,10 +142,8 @@ class _EnhanceGalleryScreenState extends State<EnhanceGalleryScreen> {
     if (urls.isEmpty) return;
 
     try {
-      final permissionInfo =
-          await PermissionCoordinator.instance.ensureGallerySaveAccess(
-        context,
-      );
+      final permissionInfo = await PermissionCoordinator.instance
+          .ensureGallerySaveAccess(context);
       if (!mounted) return;
       if (!permissionInfo.isAllowed) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -267,9 +266,7 @@ class _EnhanceGalleryScreenState extends State<EnhanceGalleryScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoadingFromApi) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     final hasPhotos = _photoUrls.isNotEmpty;
@@ -391,18 +388,16 @@ class _EnhanceGalleryScreenState extends State<EnhanceGalleryScreen> {
                 BottomActionBarSurface(
                   child: Row(
                     children: [
-                      _ActionButton(
-                        icon: VIcons.save,
-                        onTap: _savePhoto,
-                      ),
-                      VSpace.h3,
-                      Expanded(
-                        child: PrimaryButton(
-                          label: 'enhance.post_to_gallery'.tr(),
-                          onPressed: _postToGallery,
-                        ),
-                      ),
-                      VSpace.h3,
+                      _ActionButton(icon: VIcons.save, onTap: _savePhoto),
+                      // VSpace.h3,
+                      // Expanded(
+                      //   child: PrimaryButton(
+                      //     label: 'enhance.post_to_gallery'.tr(),
+                      //     onPressed: _postToGallery,
+                      //   ),
+                      // ),
+                      // VSpace.h3,
+                      Spacer(),
                       _ActionButton(
                         icon: VIcons.share,
                         isLoading: _isSharingPhoto,
@@ -515,66 +510,65 @@ class _BeforeAfterViewerState extends State<_BeforeAfterViewer> {
             onDecrease: () => _setPosition(_position.value - 0.05, width),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTapDown: (d) =>
-                  _setPosition(d.localPosition.dx / width, width),
+              onTapDown: (d) => _setPosition(d.localPosition.dx / width, width),
               onHorizontalDragStart: (d) =>
                   _setPosition(d.localPosition.dx / width, width),
               onHorizontalDragUpdate: (d) =>
                   _setPosition(d.localPosition.dx / width, width),
               child: Stack(
-            children: [
-              // Reference (before) — decoded once, never re-decoded
-              Positioned.fill(
-                child: RepaintBoundary(
-                  child: Image.memory(
-                    _referenceBytes!,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    errorBuilder: (_, _, _) =>
-                        ColoredBox(color: VColors.bgTer(context)),
-                  ),
-                ),
-              ),
-              // Enhanced (after) — clipped via ValueListenable so only
-              // the clipper repaints when the slider moves.
-              Positioned.fill(
-                child: RepaintBoundary(
-                  child: ValueListenableBuilder<double>(
-                    valueListenable: _position,
-                    builder: (_, pos, child) => ClipRect(
-                      clipper: _HorizontalClipper(pos),
-                      child: child,
+                children: [
+                  // Reference (before) — decoded once, never re-decoded
+                  Positioned.fill(
+                    child: RepaintBoundary(
+                      child: Image.memory(
+                        _referenceBytes!,
+                        fit: BoxFit.cover,
+                        gaplessPlayback: true,
+                        errorBuilder: (_, _, _) =>
+                            ColoredBox(color: VColors.bgTer(context)),
+                      ),
                     ),
-                    child: _EnhancedPhotoSurface(photoUrl: widget.photoUrl),
                   ),
-                ),
-              ),
-              // Divider line + handle — only this layer rebuilds on drag.
-              ValueListenableBuilder<double>(
-                valueListenable: _position,
-                builder: (_, pos, _) {
-                  final handleX = (width * pos).clamp(0.0, width);
-                  return Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        bottom: 0,
-                        left: handleX - 1.5,
-                        child: const _DividerLine(),
+                  // Enhanced (after) — clipped via ValueListenable so only
+                  // the clipper repaints when the slider moves.
+                  Positioned.fill(
+                    child: RepaintBoundary(
+                      child: ValueListenableBuilder<double>(
+                        valueListenable: _position,
+                        builder: (_, pos, child) => ClipRect(
+                          clipper: _HorizontalClipper(pos),
+                          child: child,
+                        ),
+                        child: _EnhancedPhotoSurface(photoUrl: widget.photoUrl),
                       ),
-                      Positioned(
-                        top: 0,
-                        bottom: 0,
-                        left: handleX - 22,
-                        child: const Center(child: _DragHandle()),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              _beforePill(),
-              _afterPill(),
-            ],
+                    ),
+                  ),
+                  // Divider line + handle — only this layer rebuilds on drag.
+                  ValueListenableBuilder<double>(
+                    valueListenable: _position,
+                    builder: (_, pos, _) {
+                      final handleX = (width * pos).clamp(0.0, width);
+                      return Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            left: handleX - 1.5,
+                            child: const _DividerLine(),
+                          ),
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            left: handleX - 22,
+                            child: const Center(child: _DragHandle()),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  _beforePill(),
+                  _afterPill(),
+                ],
               ),
             ),
           ),
@@ -584,36 +578,36 @@ class _BeforeAfterViewerState extends State<_BeforeAfterViewer> {
   }
 
   Widget _beforePill() => Positioned(
-        bottom: 16,
-        left: 16,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.6),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(
-            'enhance.before'.tr(),
-            style: VType.labelSm.copyWith(color: Colors.white),
-          ),
-        ),
-      );
+    bottom: 16,
+    left: 16,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        'enhance.before'.tr(),
+        style: VType.labelSm.copyWith(color: Colors.white),
+      ),
+    ),
+  );
 
   Widget _afterPill() => Positioned(
-        bottom: 16,
-        right: 16,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            gradient: VColors.aiGradient,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(
-            'enhance.after'.tr(),
-            style: VType.labelSm.copyWith(color: Colors.white),
-          ),
-        ),
-      );
+    bottom: 16,
+    right: 16,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        gradient: VColors.aiGradient,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        'enhance.after'.tr(),
+        style: VType.labelSm.copyWith(color: Colors.white),
+      ),
+    ),
+  );
 }
 
 class _DividerLine extends StatelessWidget {
@@ -626,10 +620,7 @@ class _DividerLine extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 4,
-          ),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.25), blurRadius: 4),
         ],
       ),
     );
@@ -791,11 +782,7 @@ class _ErrorSurface extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              VIcons.image,
-              size: 56,
-              color: VColors.textTer(context),
-            ),
+            Icon(VIcons.image, size: 56, color: VColors.textTer(context)),
             VSpace.v3,
             Text(
               'enhance.failed'.tr(),
@@ -888,10 +875,7 @@ class _ActionButton extends StatelessWidget {
                     color: VColors.accentPrimary,
                   ),
                 )
-              : Icon(
-                  icon,
-                  color: VColors.text(context),
-                ),
+              : Icon(icon, color: VColors.text(context)),
         ),
       ),
     );
